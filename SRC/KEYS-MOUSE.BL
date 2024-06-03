@@ -1,11 +1,25 @@
 ## ------------------------------------------------------
-## THE DIM NEEDS TO BE IN THE MAIN CODE
-## DIM OLD.ENV(3) 
-## -------------------------------------------------------
+## BASLOAD ISO CRLF 
+##
+##
+##
+##
+##
+## ------------------------------------------------------
 
 
 
-CLEAR.KB.BUFFER:	
-	GET TMP$: IF TMP$ <> "" THEN CLEAR.KB.BUFFER
+KB.BUFFER.CLEAR:
+	## --- CLEAR THE KEYBOARD
+	GET KB.TMP$ : KBJOY.ASC = ASC(KB.TMP$)
+	IF KBJOY.ASC <> 0 THEN GOTO KB.BUFFER.CLEAR
 	RETURN
+
+KB.JOY.KEYS.GET:
+	## --- VARS - KBJOY.ASC, KB.STR$, KB.ATTR
+	## --- VJ=JOY(0) - NEED TO ADD JOYSTICK - TODO
+	GET KB.STR$ : KBJOY.ASC = ASC(KB.STR$)
+	IF KBJOY.ASC <> 0 THEN RETURN
+	GOTO KB.JOY.KEYS.GET
+	
 
