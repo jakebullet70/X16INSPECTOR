@@ -1,0 +1,18 @@
+
+
+Digital Group MAXI BASIC version: 1979 - page 106
+https://ia802503.us.archive.org/23/items/creativecomputing-1979-06/Creative_Computing_v05_n06_1979_Jun.pdf
+
+
+C16 version: 1987
+https://plus4world.powweb.com/software/Inspektor
+
+C64 version: 2024
+https://kwayne.itch.io/inspector-commodore-64
+
+
+---------------------------------------------------------
+
+My CommanderX16 version come about mostly from the C16 and BASIC version but game flow from the c64 version.
+All code though was re-written.
+
