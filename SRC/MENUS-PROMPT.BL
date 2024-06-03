@@ -8,18 +8,56 @@
 ## ------------------------------------------------------
 
 
-	## --->  THIS CODE ENDS UP IN THE MAIN FILE
-	## ---------------------------------------------------------------------
-	## DIM MENU.TEXT$(10) 		: REM MENU BAR ITEMS 
-	## DIM MENU.TYPE(10) 		: REM 1 = ALSO LEFT/RIGHT, 0 = NOPE
-	## DIM MENU.ATTR(4) 		: REM 1=X,2=Y, 3=MENU BAR LEN,4 = TTL MENU ITEMS 
+## --->  THIS CODE ENDS UP IN THE MAIN FILE
+## ---------------------------------------------------------------------
+## DIM MENU.TEXT$(10) 		: REM MENU BAR ITEMS 
+## DIM MENU.TYPE(10) 		: REM 1 = ALSO LEFT/RIGHT, 0 = NOPE
+## DIM MENU.ATTR(4) 		: REM 1=X,2=Y, 3=MENU BAR LEN,4 = TTL MENU ITEMS 
+
+## COLORS CONTAIN BOTH THE # AND THE PETSCII CODE
+## CLR.MNU.FG.BAR$     = "01{WHITE}"
+## CLR.MNU.BG.BAR$     = "00{BLACK}"
+## CLR.MNU.FG.HL.BAR$  = "02{RED}"
+## CLR.MNU.BG.HL.BAR$  = "06{GRN}"
+## ---------------------------------------------------------------------
+
 	
-	## COLORS CONTAIN BOTH THE # AND THE PETSCII CODE
-	## CLR.MNU.FG.BAR$     = "01{WHITE}"
-	## CLR.MNU.BG.BAR$     = "00{BLACK}"
-	## CLR.MNU.FG.HL.BAR$  = "02{RED}"
-	## CLR.MNU.BG.HL.BAR$  = "06{GRN}"
-	## ---------------------------------------------------------------------
+	
+## ------------------------------------------------------				
+## ----------  SOLVED MENU ------------------------------				
+## ------------------------------------------------------		
+	
+MENU.SOLVED.INIT:
+	MENU.KB.TMP.RET.VAL = 0	
+	GOSUB MENU.CLEAR.VARS
+	
+	MENU.TEXT$(1) = "  MORE QUESTIONS "
+	MENU.TEXT$(2) = "<<  THE KILLER >>"  	: MENU.TYPE(2) = 1
+	MENU.TEXT$(3) = "<<   THE TIME  >>"  	: MENU.TYPE(3) = 1
+	MENU.TEXT$(4) = "<<   THE ROOM  >>"  	: MENU.TYPE(4) = 1
+	MENU.TEXT$(5) = "  SOLVE THE CASE "
+		
+	MENU.ATTR(1) = 8										: REM X LOCATION
+	MENU.ATTR(2) = 20										: REM Y LOCATION
+	MENU.ATTR(3) = LEN(MENU.TEXT$(6)) 						: REM MAX BAR LEN
+	MENU.ATTR(4) = 5										: REM TTL MENU ITEMS
+				
+	GOSUB MENU.CLEAR.SCRN 
+	MENU.SCROLL.LR.SELECTED = 0 : MENU.NDX = 1
+	GOSUB MENU.SOLVED.RUN	
+	RETURN 
+	
+MENU.SOLVED.RUN:	
+	GOSUB MENU.GO
+	
+	## MENU.NDX 				---> HAS THE SELECTED VALUE
+	## MENU.SCROLL.LR.SELECTED 	---> HAS THE LEFT / RIGHT SELECTION  - 1 OR 2 - 0 = NOT SELECTED
+	
+	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN RETURN : REM -- MENU SELECTED - OR SIDE MENU
+	
+	GOTO MENU.SOLVED.RUN
+	
+			
 	
 
 ## ------------------------------------------------------				
@@ -115,7 +153,8 @@ MENU.SUSPECTS.INIT:
 		
 	GOSUB MENU.CLEAR.SCRN 
 	MENU.SCROLL.LR.SELECTED = 0 : MENU.NDX = 1
-	GOSUB MENU.SUSPECTS.RUN	: RETURN 
+	GOSUB MENU.SUSPECTS.RUN	
+	RETURN 
 	
 MENU.SUSPECTS.RUN:	
 	GOSUB MENU.GO
