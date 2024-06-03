@@ -1,0 +1,65 @@
+## BASLOAD ISO CRLF 
+## SYMFILE "@:OUT.SYM"
+## ------------------------------------------------------
+##
+## FUNCTION KEY MAPPER V1.0
+## PROGRAMMER: STEVE DE GEORGE SR
+##
+## SEARCH FOR 'CHANGE_FKEYS' IN THE X16 PROGRAMMERS PDF MANUAL
+##
+## ------------------------------------------------------
+#CONTROLCODES 1
+VER$ = "1.0"
+
+
+PRINT "{DOWN}{DOWN}{DOWN}{DOWN}** X16 FUNCTION KEY MAPPER V" VER$ " **{DOWN}"
+DIM NEW.KEYS$(8)
+
+## --- DEFAULT ALL KEYS TO NOT CHANGE 
+## --- THE '!' SYMBOL MEANS DO NOT CHANGE
+FOR KEYNUM = 1 TO 8
+	NEW.KEYS$(KEYNUM) = "!"
+NEXT
+
+## --- SET KEYS YOU WANT TO CHANGE (10 CHAR MAX)
+NEW.KEYS$(1) = "BASLOAD" + CHR$(34)
+NEW.KEYS$(2) = "I.B" + CHR$(34) + ":RUN:" + CHR$(13)
+## NEW.KEYS$(3)
+## NEW.KEYS$(4)
+## NEW.KEYS$(5)
+## NEW.KEYS$(6)
+## NEW.KEYS$(7)
+NEW.KEYS$(8) = "/FM.PRG" + CHR$(13)
+
+## --- CALL ROUTINE AND CHANGE KEYS
+FOR KEYNUM = 1 TO 8
+	IF NEW.KEYS$(KEYNUM) <> "!" THEN GOSUB PREP.AND.PROCESS
+NEXT
+
+PRINT "ALL DONE! HAVE A NICE DAY!"
+END
+
+
+## --------------------------------------------------------------
+## -- SEARCH FOR 'change_fkeys' IN THE X16 PROGRAMMERS PDF MANUAL
+## --------------------------------------------------------------
+
+PREP.AND.PROCESS:
+	KTMP = KEYNUM 	: TMP$ = NEW.KEYS$(KEYNUM)  : GOSUB PROCESS.KEY 
+	KTMP = 9 		: TMP$ = "" 				: GOSUB PROCESS.KEY
+	PRINT "CHANGED F" RIGHT$(STR$(KEYNUM),1) " TO --> " NEW.KEYS$(KEYNUM)
+	RETURN
+	
+
+PROCESS.KEY:
+	KLEN = LEN(TMP$)
+	APOINTER = STRPTR(TMP$)
+	POKE $02,(APOINTER-(INT(APOINTER/256)*256))
+	POKE $03,INT(APOINTER/256)
+	POKE $30C,7
+	POKE $30D,KTMP
+	POKE $30E,KLEN
+	SYS $FEAB
+	RETURN
+
+

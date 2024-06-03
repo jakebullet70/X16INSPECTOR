@@ -1,0 +1,18 @@
+## ------------------------------------------------------
+## BASLOAD ISO CRLF 
+##
+##
+##
+##
+##
+## ------------------------------------------------------
+
+
+SOUND.INIT:
+	FMINIT : RETURN
+
+SOUND.CLICK:
+  FMDRUM 7,26:RETURN
+
+SOUND.BOING:
+  FMDRUM 7,87:RETURN

@@ -1,0 +1,30 @@
+## ------------------------------------------------------
+## THE DIM NEEDS TO BE IN THE MAIN CODE
+## DIM OLD.ENV(3) : GOSUB SAVE.ENV
+## -------------------------------------------------------
+
+
+## --- WAITING FOR BASLOAD CONST!!!
+## CONST SCREEN.MODE = 1
+## CONST SCREEN.BG = 2
+## CONST SCREEN.FG = 3
+
+
+CLOSE.APP:
+	## --- RESTORE OLD ENV
+	GOSUB RESTORE.ENV
+	END
+	
+SAVE.ENV:
+	## --- NEED TO SAVE BG AND FG
+	## ---
+	POKE $030F, PEEK($030F) OR 1: 	REM SET CARRY (GETS SCREEN MODE)
+	SYS $FF5F: 						REM CALL KERNAL FUNCTION SCREEN_MODE
+	OLD.ENV(1) = PEEK($030C): 		REM GET SCREEN MODE FROM A REG
+	## ----
+	RETURN
+
+RESTORE.ENV:
+	## --- WHEN EVER THEY CAN DO IT
+	SCREEN OLD.ENV(1)
+	RETURN

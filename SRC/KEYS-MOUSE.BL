@@ -1,0 +1,11 @@
+## ------------------------------------------------------
+## THE DIM NEEDS TO BE IN THE MAIN CODE
+## DIM OLD.ENV(3) 
+## -------------------------------------------------------
+
+
+
+CLEAR.KB.BUFFER:	
+	GET TMP$: IF TMP$ <> "" THEN CLEAR.KB.BUFFER
+	RETURN
+

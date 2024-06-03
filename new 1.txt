@@ -1,0 +1,392 @@
+## ------------------------------------------------------
+#CONTROLCODES 1
+#SYMFILE "@:I.SYM"
+## ------------------------------------------------------
+REM *******************************
+REM *    I N S P E K T O R        *
+REM *                             *
+REM * FUER    C16/116    VON      *
+REM *                             *
+REM *      ANDREAS ZILLA          *
+REM *******************************
+CLS
+
+REM PRINT CHR$($0F)
+REM POKE $30C, 7
+REM SYS $FF62
+REM gosub FIXCURSOR
+
+INPUT "PLEASE ENTER YOUR NAME 1-6 CHARACTERS";NN$
+IF LEN(NN$)>6 THEN NN$=LEFT$(NN$,6)
+
+DIM OZ(5,9)
+NA$(1)="HENRY":NA$(2)="SARAH":NA$(3)="LUCAS": NA$(4)="EMILY":NA$(5)="PETER"
+RA$(1)="GARAGE":RA$(2)="BEDROOM":RA$(3)="CHILDREN'S ROOM": RA$(4)="KITCHEN":RA$(5)="OFFICE":RA$(6)="BASEMENT"
+
+CLS
+LOCATE 11,1 : PRINT "I N S P E K T O R"
+PRINT "YOUR TASK IN THIS ADVENTURE IS TO,"
+PRINT "TO EXPOSE A MURDERER."
+PRINT "AT A PARTY, THE HOST"
+PRINT "'GEORGE' WAS KILLED.  THE FOLLOWING "
+PRINT "PEOPLE ARE POSSIBLE PERPETRATORS:"
+PRINT "HENRY,SARAH,LUCAS,EMILY,PETER"
+PRINT "TRY TO FIND OUT THE MURDERER, THE"
+PRINT "MURDER ROOM AND THE TIME OF THE CRIME"
+PRINT "BY ASKING QUESTIONS. THE CRIME."
+PRINT "HAPPENED BETWEEN 1 AND 9'O CLOCK"
+PRINT "PRESS ANY KEY TO CONTINUE"
+GOSUB WAIT4KEY
+
+	CLS
+	PRINT "!-------------------------------------!"
+	PRINT "!           !              ! GARAGE   !"
+	PRINT "!           !   TROPHY     !          !"
+	PRINT "! DINING    !---!-----   --!  ---     !"
+	PRINT "!                               !-----!"
+	PRINT "!---------------!              -!     !"
+	PRINT "!                               !     !---"
+	PRINT "! LIVING        !--  ---------           !"
+	PRINT "!--             !            !  LOUNGE   !" 
+	PRINT "  !             !  ATRUM     !           !"
+	PRINT "  !--------------------------------------!"
+
+  rem poke2021,24:poke2022,13:poke2023,0:poke2024,39
+ 
+  REM -- 400 
+  for x = 1 to 5
+	REM -- 410 
+	oz(x,1)=int(6*rnd(1))+1
+	REM -- 420 
+  next x
+  REM -- 430 
+  for x = 2 to 9
+	REM -- 440 
+	for y = 1 to 5
+LINE450: 
+		REM -- 450 
+		a=int(6*rnd(1))+1
+		REM -- 460 
+		if a = oz(y,x-1) then GOTO LINE450
+		REM -- 470 
+		oz(y,x) = a
+		REM -- 480 
+		next y
+	REM -- 490 
+  next x
+  
+  
+  
+  
+  REM -- 500 
+  mu = int(5 * rnd(1))+1
+  REM -- 510 
+  tz = int(9 * rnd(1))+1
+  REM -- 520 
+  ra = oz(mu,tz)
+  REM -- 530 
+  if mu=1 then goto LINE580
+  REM -- 540 
+  for x=1 to mu-1
+	LINE550:
+	REM -- 550 
+	if oz(x,tz)=ra then oz(x,tz)=int(5*rnd(1))+1: goto LINE550
+	REM -- 560 
+  next x
+  REM -- 570 
+  if mu=5 then goto START.QUESTIONS
+LINE580:
+  REM -- 580 
+  for x = mu+1 to 5
+	LINE590:
+	REM -- 590 
+	if oz(x,tz)=ra then oz(x,tz)=int(5*rnd(1))+1:goto LINE590
+	REM -- 600 
+  next x
+  
+  
+  
+  
+  
+START.QUESTIONS:
+  rem *** beginn ***
+  PRINT"{clr}Who do you want to see for           "
+  PRINT"next interview ? ";:input v$
+  REM -- 640 
+  for x= 1 to 5
+	REM -- 650 
+	if v$ = na$(x) then GOTO LINE700
+	REM -- 660 
+  next x
+  REM -- 670 
+  PRINT v$" but he wasn't there!": for x=1 to 3000 : next x000
+  REM -- 680 
+  PRINT "{clr}"
+  REM -- 690 
+  goto START.QUESTIONS
+  
+LINE700:
+  REM -- 700 
+  v = x
+  PRINT "{CLR}WHAT DO YOU WANT "V$" ASK ?   "
+  PRINT "1.WHERE "V$" TO A BEST. TIME WAS ?"
+  PRINT "2.WHEN "V$" WHERE HAS BEEN"
+  REM -- 740 :
+  PRINT "3.CASE SOLVED !!!
+LINE760:
+  GOSUB WAIT4KEY
+  REM -- 770 
+  x = val(a$)
+  REM -- 780 
+  if x < 1 then GOTO LINE760
+  REM -- 790 
+  if x > 3 then GOTO LINE760
+  REM -- 800 
+  gosub LINE1810
+  REM -- 810 
+  on x goto LINE820,LINE1060,LINE1320
+LINE820:
+  REM -- 820 
+  PRINT"{clr}"v$" WHERE WERE THEY AT ";:input zt: PRINT : a1 = a1 + 1
+  REM -- 830 
+  if zt < 1 then PRINT"{up}{up}": goto LINE820
+  REM -- 840 
+  if zt > 9 then PRINT"{up}{up}": goto LINE820
+  REM -- 850 
+  if v=mu then GOTO LINE870
+  REM -- 860 
+  goto LINE890
+LINE870:
+  REM -- 870 
+  if rnd(1)<.5 then GOTO LINE890
+  REM -- 880 
+  lu = int(5*rnd(1))+1 : goto LINE900
+LINE890:
+  REM -- 890 
+  lu=oz(v,zt)
+LINE900:
+  REM -- 900 
+  PRINT"-I was in the "ra$(lu)"-space!"
+  REM -- 910 
+  if rnd(1) > .2 then GOTO LINE940
+  REM -- 920 
+  if zt > tz then PRINT"-at "zt" Clock George was already dead!":goto LINE940
+  REM -- 930 
+  PRINT"-at"zt"clock our host was still alive!"
+LINE940:
+  REM -- 940 
+  for x=1 to 5
+  REM -- 950 
+  if x=v then GOTO LINE970
+  REM -- 960 
+  if oz(x,zt) = lu then PRINT"-I was in the "ra$(lu)"-Room with "na$(x)
+LINE970:
+  REM -- 970 
+  next x
+  REM -- 980 
+  for x = 1 to 5
+  REM -- 990 
+  if v = x then goto LINE1010
+ REM -- 1000 
+ if oz(x,zt)=lu-1 or oz(x,zt) = lu + 1 then PRINT"-I was able to "na$(x)" see!"
+LINE1010:
+ REM -- 1010 
+ next x
+LINE1020:
+ REM -- 1020 
+ PRINT"{down}key"
+ REM -- 1030 
+ 
+ REM ------------------------------------------
+ REM poke239,0:wait239,1:poke239,0
+ REM ------------------------------------------
+ 
+ REM -- 1040 
+ PRINT"{clr}":gosub LINE1820
+ REM -- 1050 
+ goto START.QUESTIONS
+LINE1060:
+ REM -- 1060 
+ gosub LINE1820
+ REM -- 1070 
+ PRINT"{clr}"v$", When were you in room-";:input r$:PRINT:a1=a1+1
+ REM -- 1080 
+ for x= 1 to 6
+ REM -- 1090 
+ if r$ = ra$(x) then goto LINE1110
+ REM -- 1100 
+ next x:PRINT"{up}{up}":goto LINE1060
+LINE1110:
+ REM -- 1110 
+ w=x
+ REM -- 1120 
+ for x110 = 1 to 5
+ REM -- 1130 
+ if na$(x110) =v$ then goto LINE1150
+ REM -- 1140 
+ next x110
+LINE1150:
+ REM -- 1150 
+ v=x
+ REM -- 1160 
+ if v=mu goto LINE1180
+ REM -- 1170 
+ goto LINE1260
+LINE1180:
+ REM -- 1180 
+ if ra=w then goto LINE1200
+ REM -- 1190 
+ goto LINE1230
+LINE1200:
+ REM -- 1200 
+ x=int(rnd(1)*9)+1
+ REM -- 1210 
+ PRINT"-I was over"x" Clock in "ra$(w)"-space!"
+ REM -- 1220 
+ goto LINE1020
+LINE1230:
+ REM -- 1230 
+ if rnd(1)<.5then goto LINE1260
+ REM -- 1240 
+ x=int(rnd(1)*9)+1
+ REM -- 1250 
+ if rnd(1)<.5 then PRINT"-I was over"x"Clock in "ra$(w)" space!":goto LINE1020
+LINE1260:
+ REM -- 1260 
+ x1=0 : for x222 = 1 to 9
+ REM -- 1270 
+ if oz(v,x222)=w then PRINT"-I was over"x"Clock in "ra$(w)"-space!":x1=1
+ REM -- 1280 
+ next x222
+ REM -- 1290 
+ if x1=0 then goto LINE1310
+ REM -- 1300 
+ goto LINE1020
+LINE1310:
+ REM -- 1310 
+ PRINT"-I was never in the "ra$(w)"-space":goto LINE1020
+LINE1320:
+ REM -- 1320 
+ PRINT"{clr}"
+ REM -- 1330 
+ PRINT"mr."nn$" - Do you want to say that you"
+ REM -- 1340 
+ PRINT v$" to suspect ?"
+ REM -- 1350 
+ PRINT tab(5)"{down}name:"
+ PRINT "{down}{rght}{rght}{rght}1.the murderer ?"
+ PRINT "{rght}{rght}{rght}2. The time of the crime ?"
+ PRINT "{rght}{rght}{rght}3.The Murder Room ?"
+ PRINT "{rght}{rght}{rght}4. Don't know what to do ?"
+ REM -- 1400 :
+GOSUB WAIT4KEY
+ REM -- 1410 
+ x=val(a$):PRINT"{down}"
+ REM -- 1420 
+ PRINT"{clr}"
+ REM -- 1430 
+ ON X GOTO LINE1440,LINE1530,LINE1610,LINE1750
+LINE1440:
+ REM -- 1440 
+ a2=a2+1
+ REM -- 1450 
+ if v=mu then goto LINE1470
+ REM -- 1460 
+ PRINT"Unfortunately,"na$(v)"Not the murderer!":goto LINE1490
+LINE1470:
+ REM -- 1470 
+ PRINT"{down}"nn$" ,You are right!"
+ REM -- 1480 
+ PRINT "Indeed! "na$(v)" is the murderer!":l=l+1
+
+LINE1490:
+ REM -- 1490 
+ for xx = 1 to 3000: next xx: PRINT"{down}"
+ REM -- 1500 
+ PRINT"{clr}"
+ REM -- 1510 
+ if l=3 then goto LINE1710
+ REM -- 1520 
+ goto START.QUESTIONS
+ 
+LINE1530:
+ REM -- 1530 
+ PRINT "When did the murder happen ? ";:inputzt
+ REM -- 1540 
+ a2=a2+1
+ REM -- 1550 
+ if zt=tz then PRINT"{down}fantastic! The murder time is right!":l=l+1:goto LINE1570
+ REM -- 1560 
+ PRINT"{down}unfortunately not!"
+LINE1570:
+ REM --  1570 
+ for xx=1 to 3000 :next xx: PRINT"{down}"
+ REM --  1580 
+ PRINT"{clr}"
+ REM -- 1590 
+ if l=3 then goto LINE1710
+ REM -- 1600 
+ goto START.QUESTIONS
+LINE1610:
+ ## 1610 
+ PRINT "Which is the murder room ? ";:input r$:a2=a2+1
+ ## 1620 
+ for x333 = 1 to 6
+ ## 1630 
+ if r$=ra$(x333) then goto LINE1650
+ ## 1640 
+ next x333: PRINT"{up}{up}":gosub LINE1820:goto LINE1610
+ 
+LINE1650:
+ ## 1650 
+ if x= ra then PRINT"{down}correct "nn$", This is the murder room!":l=l+1:goto LINE1670
+ ## 1660 
+ PRINT"{down}They must have been wrong!"
+LINE1670:
+ ## 1670 
+ for xx=1 to 3000 : next xx:PRINT"{down}"
+ ## 1680 
+ PRINT"{clr}"
+ ## 1690 
+ if l=3 then GOTO LINE1710
+ ## 1700 
+ goto START.QUESTIONS
+ 
+LINE1710:
+ ## 1710 
+ PRINT "{clr} Congratulations "nn$", you have "
+ ## 1720 
+ PRINT " The murder case solved."
+ ## 1730 :
+ ## 1740 
+ end
+LINE1750:
+ ## 1750 
+ PRINT "{clr}I'm disappointed in you"
+ ## 1760 
+ PRINT nn$" !!!{down}{down}"
+ ## 1770 
+ PRINT "{down}Here's what happened:"
+ ## 1780 
+ PRINT tab(5)"{down}at"tz"has "na$(mu)"The host george"
+ ## 1790 
+ PRINT tab(5)"in "ra$(ra)"-Room killed!"
+ ## 1800 
+ PRINT"{down}{down}{down}":end
+ 
+LINE1810:
+ ## 1810 
+ PRINT "{clr}"
+LINE1820:
+ ## 1820 
+ return
+
+WAIT4KEY:
+	GET A$: IF A$ = "" THEN GOTO WAIT4KEY
+	RETURN
+
+FIXCURSOR:
+  FBASE=$9F*8+$F000
+  FOR X=0 TO 5:VPOKE 1,FBASE+X,0:NEXT X
+  VPOKE 1,FBASE+6,$FF:VPOKE 1,FBASE+7,$FF
+  RETURN
