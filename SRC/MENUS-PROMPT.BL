@@ -21,6 +21,9 @@
 ## CLR.MNU.BG.HL.BAR$  = "06{GRN}"
 ## ---------------------------------------------------------------------
 
+
+## --- RETURNED VARS
+## Li = 0 : MENU.NDX = 1	
 	
 	
 ## ------------------------------------------------------				
@@ -30,17 +33,19 @@
 MENU.SOLVED.INIT:
 	
 	GOSUB MENU.RESET.VARS
+		
+	MENU.TEXT$(1) = "<< THE KILLER >>"  	: MENU.TYPE(1) = 1
+	MENU.TEXT$(2) = "<<  THE TIME  >>"  	: MENU.TYPE(2) = 1
+	MENU.TEXT$(3) = "<<  THE ROOM  >>"  	: MENU.TYPE(3) = 1
+	MENU.TEXT$(4) = " SOLVE THE CASE "
+	MENU.TEXT$(5) = "  I  GIVE UP!   "
+	MENU.TEXT$(6) = " MORE QUESTIONS "
 	
-	MENU.TEXT$(1) = "  MORE QUESTIONS "
-	MENU.TEXT$(2) = "<<  THE KILLER >>"  	: MENU.TYPE(2) = 1
-	MENU.TEXT$(3) = "<<   THE TIME  >>"  	: MENU.TYPE(3) = 1
-	MENU.TEXT$(4) = "<<   THE ROOM  >>"  	: MENU.TYPE(4) = 1
-	MENU.TEXT$(5) = "  SOLVE THE CASE "
 		
 	MENU.ATTR(1) = 8										: REM X LOCATION
 	MENU.ATTR(2) = 20										: REM Y LOCATION
-	MENU.ATTR(3) = LEN(MENU.TEXT$(6)) 						: REM MAX BAR LEN
-	MENU.ATTR(4) = 5										: REM TTL MENU ITEMS
+	MENU.ATTR(3) = LEN(MENU.TEXT$(3)) 						: REM MAX BAR LEN
+	MENU.ATTR(4) = 6										: REM TTL MENU ITEMS
 				
 	GOSUB MENU.CLEAR.SCRN 
 		
@@ -54,7 +59,6 @@ MENU.SOLVED.RUN:
 	
 	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN RETURN : REM -- MENU SELECTED - OR SIDE MENU
 	
-
 	GOTO MENU.SOLVED.RUN
 	
 			
