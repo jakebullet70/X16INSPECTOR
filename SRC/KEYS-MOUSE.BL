@@ -8,6 +8,7 @@
 ## ------------------------------------------------------
 
 
+## --- VARS - KBJOY.ASC, KB.STR$, KB.ATTR
 
 KB.BUFFER.CLEAR:
 	## --- CLEAR THE KEYBOARD
@@ -16,7 +17,6 @@ KB.BUFFER.CLEAR:
 	RETURN
 
 KB.JOY.KEYS.GET:
-	## --- VARS - KBJOY.ASC, KB.STR$, KB.ATTR
 	## --- VJ=JOY(0) - NEED TO ADD JOYSTICK - TODO
 	GET KB.STR$ : KBJOY.ASC = ASC(KB.STR$)
 	IF KBJOY.ASC <> 0 THEN RETURN
