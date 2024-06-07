@@ -8,7 +8,7 @@ The original code of this game was published in June 1979, Volume 5 Number 6 of 
 1st version:  
 https://archive.org/details/creativecomputing-1979-06/page/n105/mode/2up  
 
-C16 - +4 Version:  
+C16 / +4 Version:  
 https://plus4world.powweb.com/software/Inspektor  
 
 C64 Version:  
