@@ -1,7 +1,7 @@
 # X16INSPECTOR
 Clue style murder who dun-it for the Commander X16!  
 
-May 2034: STATUS: Game is playable but not finished.  
+May 2024: STATUS: Game is playable but not finished.  
 
 This is a simple detective game where the player has to deduct the identity of a murderer, the time of the deed, and the room where it was done, through a series of questions.  
 
