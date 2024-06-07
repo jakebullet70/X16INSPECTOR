@@ -22,9 +22,18 @@
 ## ---------------------------------------------------------------------
 
 
+## --- NOTE!!!!!!!!!!!!!!!!
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+
+
 ## --- RETURNED VARS
 ## Li = 0 : MENU.NDX = 1	
 	
+## --- END HEADER ---------------------------------------
+
+
 	
 ## ------------------------------------------------------				
 ## ----------  SOLVED MENU ------------------------------				
@@ -107,8 +116,10 @@ MENU.QUESTONS.TYPE.INIT:
 	
 	GOSUB MENU.RESET.VARS
 	
-	MENU.TEXT$(1) = "WHERE WERE YOU AT A CERTAIN TIME?"
-	MENU.TEXT$(2) = "WHEN WERE YOU AT A CERTAIN PLACE?"  
+	## MENU.TEXT$(1) = "WHERE WERE YOU AT A CERTAIN TIME?"
+	MENU.TEXT$(1) = "WHERE WERE YOU AT?"
+	MENU.TEXT$(2) = "WHAT TIME WHERE YOU AT?"  
+	## MENU.TEXT$(2) = "WHEN WERE YOU AT A CERTAIN PLACE?"  
 	MENU.TEXT$(3) = "ASK ANOTHER SUSPECT"
 		
 	MENU.ATTR(1) = 4										: REM X LOCATION
@@ -217,7 +228,9 @@ MENU.PROCESS.KEY.UD:
 	IF MENU.NDX = 0 THEN MENU.NDX = MENU.ATTR(4) 
 	IF MENU.NDX = MENU.ATTR(4)+1 THEN MENU.NDX = 1 
 	
+	## --- SPECIFIC CODE FOR SUSPECT MENU ---
 	IF IN.SUSPECT.PICKER.SCRN = 1 THEN CURRENT.SPRITE.NUM = MENU.NDX : GOSUB SHOW.SPRITE
+	## --- END SPECIFIC CODE FOR SUSPECT MENU ---
 		
 	GOSUB MENU.CLEAR.KB
 	GOTO MENU.LOOP1
@@ -268,3 +281,5 @@ REM	IF KBJOY.ASC <> 0 THEN RETURN
 REM	GOTO KB.JOY.KEYS.GET
 	
 
+
+	
