@@ -97,10 +97,14 @@ SETUP.PROMPT.SCREEN:
 	
 	
 LOAD.ALL.SPRITES:
-	## OFFSET = 531 --- THS IS THE SZE OF THE FILE ON DISK????
-	OFFSET = 640
+	BVLOAD "/SPRITES/SUSPECTS.SPR",8,1,$3000
+	
+	## If sprites are 32x32x4bpp (bits per pixel) then each pixel is 4 bits.
+	## A byte is 8 bits, so each byte in memory holds 2 pixels. To get the size
+	## you do 32*32/2=512
+	OFFSET = 512
+
 	FOR NDX = 1 TO 6
-		BVLOAD "/SPRITES/SUSPECT" + RIGHT$(STR$(NDX),1) + ".SPR",8,1,$3000 + (OFFSET * (NDX-1))
 		SPRMEM NDX,1,($3000 + (OFFSET * (NDX - 1))),0
 		SPRITE NDX,0,0,0,2,2
 		MOVSPR NDX,272,160
