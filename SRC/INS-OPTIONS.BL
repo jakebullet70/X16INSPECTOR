@@ -1,8 +1,12 @@
+## ------------------------------------------------------
 ## BASLOAD ISO CRLF 
-REM ===== OPTIONS LIBRARY =============
-REM
-REM WRITTEN FOR : COMMANDER X16
-REM TESTED ON   : EMULATOR R.38
+##
+##
+##
+##
+##
+## ------------------------------------------------------
+REM ===== MENU OPTIONS CODE =============
 REM AUTHOR      : DUSAN STRAKL
 REM MORE INFO   : 8BITCODING.COM
 REM
@@ -49,8 +53,9 @@ CHECK.FOR.RETURN.2.GAME:
 
 CLOSE.ME:
 	COLOR 1,0 : CLS 
-	IF STARTUP.INSECTOR = 1 THEN LOAD "INSPECTOR.PRG"
-	END
+	REM --- IF STARTUP.INSECTOR = 1 THEN LOAD "INSPECTOR.PRG"
+	REM --- END
+	LOAD "INSPECTOR.PRG"
 
 SAVE.ME:
 	COLOR 1,0 : CLS : COLOR 5
