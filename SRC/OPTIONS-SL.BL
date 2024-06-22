@@ -1,4 +1,11 @@
+## ------------------------------------------------------
 ## BASLOAD ISO CRLF 
+##
+##
+##
+##
+##
+## ------------------------------------------------------
 #CONTROLCODES 1
 
 REM --- THIS CODE IS SHARED BETWEEN THE MAIN AND OPTIONS PROGRAM
@@ -34,7 +41,7 @@ OPTIONS.FILE.EXISTS:
 
 	
 OPTIONS.INIT.FILE:	
-	REM --- CREATE A DEFUALT OPTIONS FILE
+	REM --- CREATE A DEFAULT OPTIONS FILE
 	FILE.NAME.TMP$ = FILE.NAME$ + ",S,W" 
 	OPEN 2,8,4,FILE.NAME.TMP$
 	PRINT#2, "MODE=1" 	: PRINT#2, "SOUND=1" 
