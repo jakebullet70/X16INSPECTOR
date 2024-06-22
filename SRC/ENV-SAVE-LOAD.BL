@@ -7,8 +7,8 @@
 ##
 ## ------------------------------------------------------
 ## ------------------------------------------------------
-## THE DIM NEEDS TO BE IN THE MAIN CODE
-## DIM OLD.ENV(3) : GOSUB SAVE.ENV
+##  CALL GOSUB SAVE.ENV ON PRG START
+##  THEN CLOSE.APP WHEN ENDING
 ## -------------------------------------------------------
 
 
@@ -25,6 +25,7 @@ CLOSE.APP:
 	END
 	
 SAVE.ENV:
+	DIM OLD.ENV(3)
 	## --- NEED TO SAVE BG AND FG
 	## ---
 	POKE $030F, PEEK($030F) OR 1: 	REM SET CARRY (GETS SCREEN MODE)
