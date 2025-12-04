@@ -1,0 +1,105 @@
+## ------------------------------------------------------
+## BASLOAD ISO CRLF 
+## SadLogic Dev Helper SEPT-2024
+## ------------------------------------------------------
+#CONTROLCODES 1
+#SYMFILE "@:AUTOBOOT.SYM"
+#SAVEAS "@:AUTOBOOT.X16"
+
+SCREEN 3
+
+
+START:
+	POKE $030C,4 : SYS $FF62 : REM --- CHANGE TO THIN PET UPPER/GRAPHICS
+	PRINT:PRINT:PRINT
+	GOSUB FUNCTION_KEY_REMAP
+	REM    1234567890123456789012345678901234567890
+	PRINT "---------------------------------------"
+	PRINT "------- SADLOGIC!   DEV MENU ----------"
+	PRINT "-------    BASLOAD HELPER    ----------"
+	PRINT "---------------------------------------"
+	PRINT" 1. BL INSPECTOR.BL  <-- CURRENT CODE"
+	PRINT" 2. BL TEST1.BL      <-- DAD  TEST CODE"
+	PRINT" 3. BL TEST2.BL      <-- ANDY TEST CODE"
+	PRINT" 4. RUN FILE MANAGER <-- GENERIC FM"
+	PRINT" 5. RUN INSPECTOR    <-- XPILED BL CODE"
+	PRINT" 6. @CD:TEST         <-- CHANGE DIR"
+	PRINT "---------------------------------------"
+	PRINT "-----   F6 TO RESTART THIS MENU   -----"
+	PRINT "         ANY OTHER KEY EXITS"
+	PRINT "---------------------------------------"
+
+GETKEY:
+	GET A$ : A = ASC(A$) : IF A=0 THEN GOTO GETKEY
+	IF A=49 THEN FILE_TO_COMP$ = "INSPECTOR.BL" : GOTO COMP_TO_BASLOAD
+	IF A=50 THEN FILE_TO_COMP$ = "TEST1.BL"  : GOTO COMP_TO_BASLOAD
+	IF A=51 THEN FILE_TO_COMP$ = "TEST2.BL"  : GOTO COMP_TO_BASLOAD
+	IF A=52 THEN LOAD"FM.PRG"
+	IF A=53 THEN LOAD"INSPECTOR"
+	IF A=54 THEN @CD:TEST*
+	NEW : END
+	
+COMP_TO_BASLOAD:
+	CLS : LOCATE 10,1 : PRINT : PRINT "STARTING BASLOAD..."
+	PRINT "BASLOAD";CHR$(34) + FILE_TO_COMP$ + CHR$(34) + "{UP}{UP}";:
+	KBBUFFER_OUT = $FEC3 : A.REG = 780
+	POKE A.REG,13       : SYS KBBUFFER_OUT
+	POKE A.REG,ASC("R") : SYS KBBUFFER_OUT
+	POKE A.REG,ASC("U") : SYS KBBUFFER_OUT
+	POKE A.REG,ASC("N") : SYS KBBUFFER_OUT
+	POKE A.REG,ASC(":") : SYS KBBUFFER_OUT
+	POKE A.REG,13       : SYS KBBUFFER_OUT
+	END
+			
+REM ===============================================================================
+
+
+FUNCTION_KEY_REMAP:
+	DIM NEW.KEYS$(8)
+
+	## --- DEFAULT ALL KEYS TO NOT CHANGE 
+	## --- THE '!' SYMBOL MEANS DO NOT CHANGE
+	FOR KEYNUM = 1 TO 8
+		NEW.KEYS$(KEYNUM) = "!"
+	NEXT
+
+	## --- SET KEYS YOU WANT TO CHANGE (10 CHAR MAX)
+	## NEW.KEYS$(1) = "BASLOAD" + CHR$(34)
+	## NEW.KEYS$(2) = "I.B" + CHR$(34) + ":RUN:" + CHR$(13)
+	## NEW.KEYS$(3)
+	## NEW.KEYS$(4)
+	## NEW.KEYS$(5)
+	NEW.KEYS$(6) = "BOOT" + CHR$(13)
+	## NEW.KEYS$(7)
+	NEW.KEYS$(8) = "^FM.PRG" + CHR$(13)
+
+	## --- CALL ROUTINE AND CHANGE KEYS
+	FOR KEYNUM = 1 TO 8
+		IF NEW.KEYS$(KEYNUM) <> "!" THEN GOSUB PREP.AND.PROCESS
+	NEXT
+	RETURN
+
+
+## --------------------------------------------------------------
+## -- SEARCH FOR 'CHANGE_FKEYS' IN THE X16 PROGRAMMERS PDF MANUAL
+## --------------------------------------------------------------
+
+PREP.AND.PROCESS:
+	KTMP = KEYNUM 	: TMP$ = NEW.KEYS$(KEYNUM)  : GOSUB PROCESS.KEY 
+	KTMP = 9 		: TMP$ = "" 				: GOSUB PROCESS.KEY
+	PRINT "CHANGED F" RIGHT$(STR$(KEYNUM),1) " TO --> " NEW.KEYS$(KEYNUM)
+	RETURN
+	
+
+PROCESS.KEY:
+	KLEN = LEN(TMP$) : APOINTER = STRPTR(TMP$)
+	POKE $02,(APOINTER-(INT(APOINTER/256)*256))
+	POKE $03,INT(APOINTER/256)
+	POKE $30C,7 : POKE $30D,KTMP : POKE $30E,KLEN
+	SYS $FEAB
+	RETURN
+
+
+
+	
+	

@@ -1,1 +1,2 @@
-Z:\8bitProgramming\x16emu_win64-r47\x16emu.exe -scale 2 -joy1
+CALL LOCAL.BAT
+START "" "%x16%" -rtc -joy1 -scale 2 

@@ -1,0 +1,1 @@
+SET x16=c:\8bitProgramming\x16emu\x16emu.exe
