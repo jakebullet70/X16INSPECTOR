@@ -6,7 +6,8 @@
 ##
 ##
 ## ------------------------------------------------------
-#SYMFILE "@:I.SYM"
+#SYMFILE "@:INS-OPTIONS.SYM"
+#SAVEAS "@:INS-OPTIONS.PRG"
 #CONTROLCODES 1
 
 
@@ -180,5 +181,5 @@ MENU.DESCRIPTIONS:
 	RETURN
 	
 	
-#INCLUDE "OPTIONS-SL.BL"	
-#INCLUDE "KEYS-MOUSE.BL"
+#INCLUDE "/SRC/OPTIONS-SL.BL"	
+#INCLUDE "/SRC/KEYS-MOUSE.BL"

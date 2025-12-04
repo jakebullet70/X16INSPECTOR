@@ -6,7 +6,8 @@
 ##
 ##
 ## ------------------------------------------------------
-#SYMFILE "@:I.SYM"
+#SYMFILE "@:INS-ABOUT.SYM"
+#SAVEAS "@:INS-ABOUT.PRG"
 #CONTROLCODES 1
 
 
@@ -67,4 +68,4 @@ WAITKEY01MNU:
 
 	
 	
-#INCLUDE "OPTIONS-SL.BL"	
+#INCLUDE "/SRC/OPTIONS-SL.BL"	
