@@ -8,7 +8,7 @@
 ## ------------------------------------------------------
 
 
-SET.THEME.DARK:
+SET_THEME_DARK:
 	CLR.BACKGROUND$ 	= "00{BLACK}"
 	CLR.FGTEXT.NORMAL$ 	= "01{WHITE}"
 	CLR.FGTEXT.BRIGHT$ 	= "05{GRN}"
@@ -21,7 +21,7 @@ SET.THEME.DARK:
 	CLR.BG.MUGSHOT$ 	= "11{GREY 3}"
 	RETURN
 	
-SET.THEME.LIGHT:
+SET_THEME_LIGHT:
 	REM --- TODO
 	CLR.BACKGROUND$ 	= "00{BLACK}"
 	CLR.FGTEXT.NORMAL$ 	= "01{WHITE}"
