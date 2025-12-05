@@ -8,11 +8,11 @@
 ## ------------------------------------------------------
 
 
-SOUND.INIT:
+SOUND_INIT:
 	FMINIT : RETURN
 
 SOUND_CLICK:
   FMDRUM 7,26:RETURN
 
-SOUND.BOING:
+SOUND_BOING:
   FMDRUM 7,87:RETURN
