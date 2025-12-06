@@ -1,0 +1,43 @@
+## ------------------------------------------------------
+## BASLOAD ISO CRLF 
+##
+##
+##
+##
+##
+## ------------------------------------------------------
+## VARS:
+## - TMP$
+## - NOTES$(51)
+## - NOTES_POINTER, NOTES_LEN
+
+#DEFINE MAX_NOTE_SIZE 51 
+
+NOTES_INIT:
+	DIM NOTES$(MAX_NOTE_SIZE)
+	GOSUB NOTES_CLEAR
+	RETURN
+	
+	
+NOTES_CLEAR:
+	NOTES_POINTER = 0 : NOTES_LEN = 0
+	TMP$ = RPT$(ASC(" "),38)
+	FOR X = 0 TO MAX_NOTE_SIZE : NOTES$ = TMP$ : NEXT X
+	RETURN
+
+NOTES_ADD:
+	NOTES$(NOTES_POINTER) = TMP$
+	NOTES_POINTER = NOTES_POINTER + 1
+	RETURN
+
+NOTES_ADD_LBREAK:
+	TMP$ = RPT$(ASC("="),38) : GOSUB NOTES_ADD
+	RETURN
+
+	
+NOTES_PRINT:
+	CLS : FOR X = 0 TO NOTES_POINTER + 1 : PRINT NOTES$(X) : NEXT X
+	RETURN
+
+
+	
