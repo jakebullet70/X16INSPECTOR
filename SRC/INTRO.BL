@@ -8,7 +8,7 @@
 ## ------------------------------------------------------
 
 
-DRAW.INTRO.SCREEN:
+DRAW_INTRO_SCREEN:
 
 	COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
 	CLS : LOCATE 5,3 : PRINT "** I N S P E C T O R  CLUE-LESS **"
