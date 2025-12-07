@@ -45,7 +45,7 @@ DRAW_DIAGRAM:
 	NEXT
 	PRINT "{RVS OFF}"; 
 	COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
-	LOCATE 2,2 : PRINT "!---------------------------------!"
+	LOCATE 2,2 : PRINT "\Xcf---------------------------------!"
 	LOCATE 3,2 : PRINT "!           !          !  GARAGE  !"
 	LOCATE 4,2 : PRINT "!           !  CLOSET  !          !"
 	LOCATE 5,2 : PRINT "!  OFFICE   !-----   --!  ---     !"
