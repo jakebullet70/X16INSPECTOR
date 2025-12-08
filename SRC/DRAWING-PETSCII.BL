@@ -8,6 +8,7 @@
 ## ------------------------------------------------------
 
 
+
 SET_THEME_DARK:
 	CLR.BACKGROUND$ 	= "00{BLACK}"
 	CLR.FGTEXT.NORMAL$ 	= "01{WHITE}"
@@ -44,7 +45,7 @@ DRAW_DIAGRAM:
 	NEXT
 	PRINT "{RVS OFF}"; 
 	COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
-	LOCATE 2,2 : PRINT "!---------------------------------!"
+	LOCATE 2,2 : PRINT "\Xcf---------------------------------!"
 	LOCATE 3,2 : PRINT "!           !          !  GARAGE  !"
 	LOCATE 4,2 : PRINT "!           !  CLOSET  !          !"
 	LOCATE 5,2 : PRINT "!  OFFICE   !-----   --!  ---     !"
@@ -101,14 +102,15 @@ SETUP_PROMPT_SCREEN:
 	
 	
 LOAD_ALL_SPRITES:
-	BVLOAD "/SPRITES/SUSPECTS.SPR",8,1,$3000
+	BVLOAD "/SPRITES/SUSPECTS2.SPR",8,1,$3000
+	#DEFINE SPRITE_TTL 7	
 	
-	## If sprites are 32x32x4bpp (bits per pixel) then each pixel is 4 bits.
-	## A byte is 8 bits, so each byte in memory holds 2 pixels. To get the size
-	## you do 32*32/2=512
+	## 'If sprites are 32x32x4bpp (bits per pixel) then each pixel is 4 bits.
+	## 'A byte is 8 bits, so each byte in memory holds 2 pixels. To get the size
+	## 'you do 32*32/2=512
 	OFFSET = 512
 
-	FOR NDX = 1 TO 6
+	FOR NDX = 1 TO SPRITE_TTL
 		SPRMEM NDX,1,($3000 + (OFFSET * (NDX - 1))),0
 		SPRITE NDX,0,0,0,2,2
 		MOVSPR NDX,272,160
@@ -117,11 +119,12 @@ LOAD_ALL_SPRITES:
 	
 SHOW_SPRITE:
 	GOSUB TURN_OFF_ALL_SPRITES
+	## 'LOCATE 2,2 : PRINT CURRENT.SPRITE.NUM ;
 	SPRITE CURRENT.SPRITE.NUM,3
 	RETURN
   
 TURN_OFF_ALL_SPRITES:
-	FOR NDX = 1 TO 6 : SPRITE NDX,0 : NEXT
+	FOR NDX = 1 TO SPRITE_TTL : SPRITE NDX,0 : NEXT
 	RETURN
 
 SHOW_KB_JOY_PROMPT:
@@ -129,3 +132,5 @@ SHOW_KB_JOY_PROMPT:
 	LOCATE 30,1  : COLOR VAL(CLR.FGTEXT.ALERT$) : PRINT KboardJoyPrompt$;
 	POKE 903,30  : REM --- PUT IT BACK TO THE ORIGINAL
 	RETURN
+
+
