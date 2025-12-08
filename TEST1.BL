@@ -1,0 +1,19 @@
+REM =======================================================================================
+## BASLOAD ISO CRLF 
+## ===============================================================================
+#CONTROLCODES 1
+#SYMFILE "@:TEST1.SYM"
+#SAVEAS "@:TEST1.PRG"
+
+
+PAGE_SIZE = 20
+
+ITEMS_TTL = 24
+
+TTL_PAGES = INT(ITEMS_TTL / PAGE_SIZE ) 
+## REMANDER = ITEMS_TTL - (PAGE_SIZE * INT(ITEMS_TTL / PAGE_SIZE )) 
+
+IF ITEMS_TTL - (PAGE_SIZE * INT(ITEMS_TTL / PAGE_SIZE ))  > 0 THEN TTL_PAGES = TTL_PAGES + 1 
+PRINT TTL_PAGES
+
+
