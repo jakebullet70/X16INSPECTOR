@@ -9,31 +9,53 @@
 
 
 
-SET.THEME.DARK:
-	CLR.BACKGROUND$ 	= "00{BLACK}"
-	CLR.FGTEXT.NORMAL$ 	= "01{WHITE}"
-	CLR.FGTEXT.BRIGHT$ 	= "05{GRN}"
-	CLR.FGTEXT.ALERT$ 	= "02{RED}"
+## --- Themes set two layers of colour: the CLR.* strings ("NN{TOKEN}", where NN is
+## --- the VAL()-able colour number and {TOKEN} is the matching control code) used by
+## --- the game screens, and the numeric menu colours used by the title-screen menu
+## --- (INTRO.BL).  Applied once at startup in INSPECTOR.BL before anything is drawn.
 
-	CLR.MNU.FG.BAR$     = CLR.FGTEXT.BRIGHT$
-	CLR.MNU.BG.BAR$     = CLR.BACKGROUND$
-	CLR.MNU.FG.HL.BAR$  = CLR.FGTEXT.NORMAL$
-	CLR.MNU.BG.HL.BAR$  = CLR.FGTEXT.BRIGHT$
-	CLR.BG.MUGSHOT$ 	= "11{GREY 3}"
+SET.THEME.DARK:
+	## --- dark: light text on a black background (the original look) ---
+	CLR.BACKGROUND$        = "00{BLACK}"
+	CLR.FGTEXT.NORMAL$     = "01{WHITE}"
+	CLR.FGTEXT.BRIGHT$     = "05{GRN}"
+	CLR.FGTEXT.ALERT$      = "02{RED}"
+	CLR.FGTEXT.BACKGROUND$ = CLR.BACKGROUND$
+
+	CLR.MNU.FG.BAR$    = CLR.FGTEXT.BRIGHT$
+	CLR.MNU.BG.BAR$    = CLR.BACKGROUND$
+	CLR.MNU.FG.HL.BAR$ = CLR.FGTEXT.NORMAL$
+	CLR.MNU.BG.HL.BAR$ = CLR.FGTEXT.BRIGHT$
+	CLR.BG.MUGSHOT$    = "11{GREY 3}"
+
+	## --- title-screen menu (INTRO.BL) ---
+	DEFAULT.FG.COLOR=1  : DEFAULT.BG.COLOR=0
+	SELECTED.FG.COLOR=1 : SELECTED.BG.COLOR=0
+	ACTIVE.FG.COLOR=1   : ACTIVE.BG.COLOR=6
+	HEADER.FG.COLOR=15  : HEADER.BG.COLOR=0
+	TITLE.FG.COLOR=4
 	RETURN
 
 SET.THEME.LIGHT:
-	REM --- TODO
-	CLR.BACKGROUND$ 	= "00{BLACK}"
-	CLR.FGTEXT.NORMAL$ 	= "01{WHITE}"
-	CLR.FGTEXT.BRIGHT$ 	= "05{GRN}"
-	CLR.FGTEXT.ALERT$ 	= "02{RED}"
+	## --- light: dark text on a light-grey background ---
+	CLR.BACKGROUND$        = "15{GREY 1}"
+	CLR.FGTEXT.NORMAL$     = "00{BLACK}"
+	CLR.FGTEXT.BRIGHT$     = "06{BLUE}"
+	CLR.FGTEXT.ALERT$      = "02{RED}"
+	CLR.FGTEXT.BACKGROUND$ = CLR.BACKGROUND$
 
-	CLR.MNU.FG.BAR$     = CLR.FGTEXT.BRIGHT$
-	CLR.MNU.BG.BAR$     = CLR.BACKGROUND$
-	CLR.MNU.FG.HL.BAR$  = CLR.FGTEXT.NORMAL$
-	CLR.MNU.BG.HL.BAR$  = CLR.FGTEXT.BRIGHT$
-	CLR.BG.MUGSHOT$ 	= "11{GREY 3}"
+	CLR.MNU.FG.BAR$    = "06{BLUE}"
+	CLR.MNU.BG.BAR$    = CLR.BACKGROUND$
+	CLR.MNU.FG.HL.BAR$ = "01{WHITE}"
+	CLR.MNU.BG.HL.BAR$ = "06{BLUE}"
+	CLR.BG.MUGSHOT$    = "12{GREY 2}"
+
+	## --- title-screen menu (INTRO.BL) ---
+	DEFAULT.FG.COLOR=0  : DEFAULT.BG.COLOR=15
+	SELECTED.FG.COLOR=0 : SELECTED.BG.COLOR=15
+	ACTIVE.FG.COLOR=1   : ACTIVE.BG.COLOR=6
+	HEADER.FG.COLOR=11  : HEADER.BG.COLOR=15
+	TITLE.FG.COLOR=4
 	RETURN
 
 
@@ -48,6 +70,9 @@ DRAW.DIAGRAM:
 	GL.TREE$   = CHR$(165) : REM --- tree-trunk block
 	GL.HEDGE$  = CHR$(199) : REM --- hedge run
 	GL.BRANCH$ = CHR$(175) : REM --- branch block
+	## --- pin the background to black while drawing so the reverse-video room labels ---
+	## --- read as black on any theme (the house is a fixed picture, not theme-tinted) ---
+	COLOR 1,0
 	## --- widen the logical line so a full 40-column PRINT won't scroll the screen ---
 	POKE 903,60
 	LOCATE 1,1 : PRINT "{RVS ON}{GREEN}             {GREY 1}                       {GREEN}    " ;

@@ -62,6 +62,7 @@ OPTIONS.LOAD:
 	
 		
 OPTIONS.SAVE:
+	FILE.NAME$ = "INSPECTOR.DAT" : REM --- FIX: CHECK.FOR.RETURN.2.GAME leaves FILE.NAME$ on the flag file, so pin the options file here
 	DOS "S:" + FILE.NAME$ : REM --- DELETE THE OLD FILE
 	
 	FILE.NAME.TMP$ = FILE.NAME$ + ",S,W" 
