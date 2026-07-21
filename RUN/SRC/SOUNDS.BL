@@ -1,0 +1,23 @@
+## ------------------------------------------------------
+## ' BASLOAD ISO CRLF 
+## '
+## '
+## '
+## ' NEEDS REFACTORED SOUNDS AND SUCH, JUST PLACE HOLDERS
+## ' REALLY
+## ------------------------------------------------------
+
+
+SOUND.INIT:
+   FMINIT : RETURN
+
+SOUND.CLICK:
+   FMDRUM 7,26:RETURN
+
+SOUND.BOING:
+   FMDRUM 7,87:RETURN
+  
+SOUND.ERROR:
+   REM '=== NEEDS A BETTER ERROR SOUND
+   ## 'IF OPTIONS.SOUND <> 1 THEN RETURN
+   FMDRUM 7,68:RETURN

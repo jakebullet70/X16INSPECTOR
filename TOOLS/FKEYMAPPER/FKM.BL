@@ -5,7 +5,7 @@
 ## FUNCTION KEY MAPPER V1.0
 ## PROGRAMMER: STEVE DE GEORGE SR
 ##
-## SEARCH FOR 'CHANGE_FKEYS' IN THE X16 PROGRAMMERS PDF MANUAL
+## SEARCH FOR 'CHANGE.FKEYS' IN THE X16 PROGRAMMERS PDF MANUAL
 ##
 ## ------------------------------------------------------
 #CONTROLCODES 1
@@ -41,7 +41,7 @@ END
 
 
 ## --------------------------------------------------------------
-## -- SEARCH FOR 'change_fkeys' IN THE X16 PROGRAMMERS PDF MANUAL
+## -- SEARCH FOR 'change.fkeys' IN THE X16 PROGRAMMERS PDF MANUAL
 ## --------------------------------------------------------------
 
 PREP.AND.PROCESS:

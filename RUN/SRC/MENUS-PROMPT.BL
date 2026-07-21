@@ -1,0 +1,248 @@
+## ------------------------------------------------------
+## BASLOAD ISO CRLF 
+##
+##
+##
+##
+##
+## ------------------------------------------------------
+
+
+## --->  THIS CODE ENDS UP IN THE MAIN FILE
+## ---------------------------------------------------------------------
+## DIM MENU.TEXT$(10) 		: REM MENU BAR ITEMS 
+## DIM MENU.TYPE(10) 		: REM 1 = ALSO LEFT/RIGHT, 0 = NOPE
+## DIM MENU.ATTR(4) 		: REM 1=X,2=Y, 3=MENU BAR LEN,4 = TTL MENU ITEMS 
+
+## COLORS CONTAIN BOTH THE # AND THE PETSCII CODE
+## CLR.MNU.FG.BAR$     = "01{WHITE}"
+## CLR.MNU.BG.BAR$     = "00{BLACK}"
+## CLR.MNU.FG.HL.BAR$  = "02{RED}"
+## CLR.MNU.BG.HL.BAR$  = "06{GRN}"
+## ---------------------------------------------------------------------
+
+
+## --- NOTE!!!!!!!!!!!!!!!!
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+## --- THERE IS SPECFIC SUSPECT MENU CODE IN --->  MENU.PROCESS.KEY.UD:
+
+
+## --- RETURNED VARS
+## Li = 0 : MenuNdx = 1	
+	
+## --- END HEADER ---------------------------------------
+
+
+	
+## ------------------------------------------------------				
+## ----------  SOLVED MENU ------------------------------				
+## ------------------------------------------------------		
+	
+MENU.SOLVED.INIT:
+	
+	GOSUB MENU.RESET.VARS
+		
+	MENU.TEXT$(1) = "<< THE KILLER >>"  	: MENU.TYPE(1) = 1
+	MENU.TEXT$(2) = "<<  THE TIME  >>"  	: MENU.TYPE(2) = 1
+	MENU.TEXT$(3) = "<<  THE ROOM  >>"  	: MENU.TYPE(3) = 1
+	MENU.TEXT$(4) = " SOLVE THE CASE "
+	MENU.TEXT$(5) = "  I  GIVE UP!   "
+	MENU.TEXT$(6) = " MORE QUESTIONS "
+	
+		
+	MENU.ATTR(1) = 8										: REM X LOCATION
+	MENU.ATTR(2) = 20										: REM Y LOCATION
+	MENU.ATTR(3) = LEN(MENU.TEXT$(3)) 						: REM MAX BAR LEN
+	MENU.ATTR(4) = 6										: REM TTL MENU ITEMS
+				
+	GOSUB MENU.CLEAR.SCRN 
+		
+	RETURN 
+	
+MENU.SOLVED.RUN:	
+	GOSUB MENU.GO
+	
+	## MenuNdx 				---> HAS THE SELECTED VALUE
+	## MENU.SCROLL.LR.SELECTED 	---> HAS THE LEFT / RIGHT SELECTION  - 1 OR 2 - 0 = NOT SELECTED
+	
+	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN RETURN : REM -- MENU SELECTED - OR SIDE MENU
+	
+	GOTO MENU.SOLVED.RUN
+	
+			
+	
+
+## ------------------------------------------------------				
+## -------  QUESTIONS ABOUT  ROOMS  ---------------------				
+## ------------------------------------------------------		
+		
+		
+MENU.QUESTONS.ROOMS.INIT:
+	
+	GOSUB MENU.RESET.VARS
+	
+	FOR N = 1 TO 6 
+		MENU.TEXT$(N) = ROOMS$(N)
+	NEXT N
+	 					
+	MENU.ATTR(1) = 9										: REM X LOCATION
+	MENU.ATTR(2) = 21										: REM Y LOCATION
+	MENU.ATTR(3) = 15										: REM MAX BAR LEN
+	MENU.ATTR(4) = 6										: REM TTL MENU ITEMS
+			
+	GOSUB MENU.CLEAR.SCRN 
+	RETURN 
+	
+MENU.QUESTONS.ROOMS.RUN:	
+	GOSUB MENU.GO
+	
+	## MenuNdx 				---> HAS THE SELECTED VALUE
+	## MENU.SCROLL.LR.SELECTED 	---> HAS THE LEFT / RIGHT SELECTION  - 1 OR 2 - 0 = NOT SELECTED
+	
+	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN RETURN : REM -- MENU SELECTED - OR SIDE MENU
+	
+	GOTO MENU.QUESTONS.ROOMS.RUN
+	
+		
+		
+## ------------------------------------------------------				
+## -------  QUESTIONS FOR SUSPECTS  ---------------------				
+## ------------------------------------------------------		
+		
+		
+MENU.QUESTONS.TYPE.INIT:
+	
+	GOSUB MENU.RESET.VARS
+	
+	
+	MENU.TEXT$(1) = "WHERE WERE YOU AT?"
+	MENU.TEXT$(2) = "WHAT TIME WHERE YOU AT?"  
+	MENU.TEXT$(3) = "ASK ANOTHER SUSPECT"
+		
+	MENU.ATTR(1) = 4										: REM X LOCATION
+	MENU.ATTR(2) = 21										: REM Y LOCATION
+	MENU.ATTR(3) = LEN(MENU.TEXT$(1)) 						: REM MAX BAR LEN
+	MENU.ATTR(4) = 3										: REM TTL MENU ITEMS
+			
+	GOSUB MENU.CLEAR.SCRN 
+	RETURN 
+	
+MENU.QUESTONS.TYPE.RUN:	
+	GOSUB MENU.GO
+	
+	## MenuNdx 				---> HAS THE SELECTED VALUE
+	## MENU.SCROLL.LR.SELECTED 	---> HAS THE LEFT / RIGHT SELECTION  - 1 OR 2 - 0 = NOT SELECTED
+	
+	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN RETURN : REM -- MENU SELECTED - OR SIDE MENU
+	
+	GOTO MENU.QUESTONS.TYPE.RUN
+	
+		
+		
+		
+## ------------------------------------------------------				
+## -------   SUSPECTS MENU ------------------------------				
+## ------------------------------------------------------		
+	
+MENU.SUSPECTS.INIT:
+	
+	GOSUB MENU.RESET.VARS
+	IN.SUSPECT.PICKER.SCRN = 1
+	## IF LAST.SUSPECT.QUESTIONED = 0 THEN LAST.SUSPECT.QUESTIONED = 1 
+	MenuNdx = SELECTED.SUSPECT.NDX
+
+	FOR N = 1 TO 5
+		MENU.TEXT$(N) = SUSPECTS$(N) 
+	NEXT N
+	MENU.TEXT$(6) = "VIEW MY NOTEBOOK"
+	MENU.TEXT$(7) = "I SOLVED THE CASE!"
+	
+	MENU.ATTR(1) = 8										: REM X LOCATION
+	MENU.ATTR(2) = 20										: REM Y LOCATION
+	MENU.ATTR(3) = LEN(MENU.TEXT$(6)) 						: REM MAX BAR LEN
+	MENU.ATTR(4) = 7										: REM TTL MENU ITEMS
+	
+	GOSUB MENU.CLEAR.SCRN	
+	
+	RETURN 
+	
+MENU.SUSPECTS.RUN:	
+	GOSUB MENU.GO
+	
+	## MENU.SCROLL.LR.SELECTED 	---> HAS THE LEFT / RIGHT SELECTION  - 1 OR 2 - 0 = NOT SELECTED
+	
+	CURRENT.SPRITE.NUM = MenuNdx
+	## 'LAST.SUSPECT.QUESTIONED = MenuNdx
+	## 'IF MenuNdx = 6 THEN LAST.SUSPECT.QUESTIONED = 1
+
+	IF MENU.SELECTED > 0 OR MENU.SCROLL.LR.SELECTED > 0 THEN IN.SUSPECT.PICKER.SCRN = 0 : RETURN : REM -- MENU SELECTED - OR SIDE MENU
+	
+	GOTO MENU.SUSPECTS.RUN
+	
+	
+
+## ------------------------------------------------------
+## ------------------------------------------------------
+## ------------------------------------------------------
+## ------------------------------------------------------
+## -------------- GENERIC CODE --------------------------
+
+MENU.GO: 
+	MENU.SCROLL.LR.SELECTED = 0	
+	MENU.SELECTED = 0
+	
+MENU.LOOP1:
+	FOR X = 1 TO MENU.ATTR(4)
+		LOCATE X + MENU.ATTR(2)-1,MENU.ATTR(1)
+		IF MenuNdx <> X THEN COLOR VAL(CLR.MNU.FG.BAR$), VAL(CLR.MNU.BG.BAR$)
+		IF MenuNdx =  X THEN COLOR VAL(CLR.MNU.FG.HL.BAR$), VAL(CLR.MNU.BG.HL.BAR$)
+		PRINT MENU.TEXT$(X) ;
+	NEXT
+	
+MENU.GET.KEYS:
+	
+	GOSUB KB.JOY.KEYS.GET : SLEEP(5)
+		
+	IF KB.STR$ = "U" THEN MenuNdx = MenuNdx - 1 : GOTO MENU.PROCESS.KEY.UD
+	IF KB.STR$ = "D"  THEN MenuNdx = MenuNdx + 1 : GOTO MENU.PROCESS.KEY.UD
+	IF KB.STR$ = "L" AND MENU.TYPE(MenuNdx) = 1 THEN MENU.SCROLL.LR.SELECTED = 1 : RETURN
+	IF KB.STR$ = "R" AND MENU.TYPE(MenuNdx) = 1 THEN MENU.SCROLL.LR.SELECTED = 2 : RETURN
+	IF KB.STR$ = "F" THEN MENU.SELECTED = 1 : RETURN
+
+	GOTO MENU.GET.KEYS
+
+MENU.PROCESS.KEY.UD:
+	IF MenuNdx = 0 THEN MenuNdx = MENU.ATTR(4) 
+	IF MenuNdx = MENU.ATTR(4)+1 THEN MenuNdx = 1 
+	
+	## --- SPECIFIC CODE FOR SUSPECT MENU ---
+	IF IN.SUSPECT.PICKER.SCRN = 1 THEN CURRENT.SPRITE.NUM = MenuNdx : GOSUB SHOW.SPRITE
+	## --- END SPECIFIC CODE FOR SUSPECT MENU ---
+		
+	GOSUB KB.BUFFER.CLEAR
+	GOTO MENU.LOOP1
+	
+MENU.CLEAR.SCRN:
+	COLOR VAL(CLR.MNU.FG.BAR$),VAL(CLR.MNU.BG.BAR$)
+	FOR X23 = 1 TO MENU.ATTR(4)
+		LOCATE X23 + MENU.ATTR(2) - 1,MENU.ATTR(1)
+		PRINT RPT$(ASC(" "),MENU.ATTR(3))
+	NEXT X23
+	RETURN
+
+MENU.RESET.VARS:	
+	MENU.KB.TMP.RET.VAL = 0	
+	MENU.SCROLL.LR.SELECTED = 0 : MenuNdx = 1	
+	
+	## --- GOSUB MENU.CLEAR.VARS
+	FOR X23 = 1 TO 10 : MENU.TEXT$(X23) = "" : MENU.TYPE(X23)  = 0 : NEXT X23
+	FOR X23 = 1 TO 4  : MENU.ATTR(X23) = 0   : NEXT X23
+	
+	RETURN
+
+
+
+
+
+	
