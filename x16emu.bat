@@ -10,8 +10,8 @@ rem  working copy of the source in RUN\SRC, RUN\SPRITES, and the build outputs.
 rem  Absolute paths in the code (/SRC, /SPRITES, /MSEDIT, /XFMGR) resolve
 rem  against this root.
 rem
-rem      x16emu.bat                 boot into the /SRC source folder (BASIC)
-rem      x16emu.bat -prg FOO.PRG -run   load + run a program
+rem      x16emu.bat                     boot straight into the MSEDIT editor (runs RUN\ED)
+rem      x16emu.bat -prg FOO.PRG -run   load + run a specific program instead
 rem
 rem  Emulator location: override by setting the X16EMU environment variable to
 rem  your x16emu.exe before calling; otherwise the default below is used.
@@ -33,6 +33,12 @@ if not exist "%DRIVE%" (
 	exit /b 1
 )
 
-"%X16EMU%" -fsroot "%DRIVE%" -startin "%DRIVE%\SRC" -scale 2 -rtc -joy1 %*
+rem  With no arguments, auto-run RUN\ED, which chain-loads /MSEDIT/EDIT.PRG (the
+rem  editor). Pass any argument (e.g. -prg FOO.PRG -run) to override and launch that.
+if "%~1"=="" (
+	"%X16EMU%" -fsroot "%DRIVE%" -startin "%DRIVE%\SRC" -prg "%DRIVE%\ED" -run -scale 2 -rtc -joy1
+) else (
+	"%X16EMU%" -fsroot "%DRIVE%" -startin "%DRIVE%\SRC" -scale 2 -rtc -joy1 %*
+)
 
 endlocal
