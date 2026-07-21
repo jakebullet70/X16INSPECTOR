@@ -1,5 +1,5 @@
 ## ------------------------------------------------------
-## BASLOAD ISO CRLF 
+## BASLOAD ISO CRLF
 ##
 ##
 ##
@@ -21,7 +21,7 @@ SET.THEME.DARK:
 	CLR.MNU.BG.HL.BAR$  = CLR.FGTEXT.BRIGHT$
 	CLR.BG.MUGSHOT$ 	= "11{GREY 3}"
 	RETURN
-	
+
 SET.THEME.LIGHT:
 	REM --- TODO
 	CLR.BACKGROUND$ 	= "00{BLACK}"
@@ -35,33 +35,46 @@ SET.THEME.LIGHT:
 	CLR.MNU.BG.HL.BAR$  = CLR.FGTEXT.BRIGHT$
 	CLR.BG.MUGSHOT$ 	= "11{GREY 3}"
 	RETURN
-	
+
 
 
 DRAW.DIAGRAM:
-	PRINT "{RVS ON}{GREEN}";
-	FOR YY = 1 TO 14
-		LOCATE YY,1 : PRINT RPT$(ASC(" "),40);
-	NEXT
-	PRINT "{RVS OFF}"; 
+	## --- Original C64 "INSPEKTOR" house layout, relabelled to this game's rooms. ---
+	## --- Offset colour-coded rooms with a tree and shrubs on the lawn.  The rooms ---
+	## --- are decorative; their names match ROOMS$(): OFFICE BASEMENT KITCHEN     ---
+	## --- CLOSET LIBRARY GARAGE.  Ported byte-for-byte from the C64 original.      ---
+	## --- The graphic shrub/tree glyphs live outside ASCII, so build them w/ CHR$. ---
+	GL.SHRUB$  = CHR$(204) : REM --- shrub / hedge dot
+	GL.TREE$   = CHR$(165) : REM --- tree-trunk block
+	GL.HEDGE$  = CHR$(199) : REM --- hedge run
+	GL.BRANCH$ = CHR$(175) : REM --- branch block
+	## --- widen the logical line so a full 40-column PRINT won't scroll the screen ---
+	POKE 903,60
+	LOCATE 1,1 : PRINT "{RVS ON}{GREEN}             {GREY 1}                       {GREEN}    " ;
+	LOCATE 2,1 : PRINT "{RVS ON}{GREEN}       {RVS OFF}                        {RVS ON}  {GREY 1}   {GREEN}    " ;
+	LOCATE 3,1 : PRINT "{RVS ON}{GREEN}       {RVS OFF} {RVS ON} {CYAN}" + GL.SHRUB$ + GL.SHRUB$ + "{GREEN}  {BROWN}" + GL.TREE$ + "{GREEN}  {CYAN}" + GL.SHRUB$ + GL.SHRUB$ ;
+	PRINT "{GREEN} {RVS OFF}   {RVS ON}{GREY 3}        {RVS OFF} {RVS ON}{GREEN}  {GREY 1}   {GREEN}    " ;
+	LOCATE 4,1 : PRINT "{RVS ON}{GREEN}       {RVS OFF} {RVS ON}     {BROWN}" + GL.SHRUB$ + "{GREEN}     {RVS OFF}   {RVS ON}{GREY 3}        {RVS OFF} {RVS ON}{GREEN}  {GREY 1}   {GREEN}    " ;
+	LOCATE 5,1 : PRINT "{RVS ON}{GREEN} {RVS OFF}       {RVS ON}{LIGHT GREEN}  OFFICE   {RVS OFF}   {RVS ON}{GREY 2}BASEMENT{RVS OFF}         {RVS ON}{GREEN} " ;
+	LOCATE 6,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{BLUE} {CYAN}" + GL.SHRUB$ + "{BLUE}   {RVS OFF} {RVS ON}{LIGHT GREEN}           {GREY 3}" + GL.HEDGE$ + GL.HEDGE$ + GL.HEDGE$ ;
+	PRINT "{GREY 2}        {RVS OFF} {RVS ON}  {GREY 3}" + GL.TREE$ + "  {GREY 2}" + GL.TREE$ + " {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 7,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{BLUE}     {RVS OFF}  {RVS ON}{LIGHT GREEN} {RVS OFF}                     {RVS ON}{GREY 2}  {GREY 3}" + GL.SHRUB$ + GL.BRANCH$ + GL.BRANCH$ + "{GREY 2}" + GL.TREE$ ;
+	PRINT " {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 8,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{LIGHT BLUE}     {BLUE}  {LIGHT GREEN} {BLUE} {RVS OFF} {RVS ON}{RED}       {RVS OFF} {RVS ON}{BROWN}         {RVS OFF} {RVS ON}{GREY 2} {GREY 1}       {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 9,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{LIGHT BLUE}     {BLUE}  {LIGHT BLUE} {BLUE} {RVS OFF} {RVS ON}{RED}       {RVS OFF} {RVS ON}{BROWN}         {RVS OFF} {RVS ON}{GREY 2} {GREY 1}       {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 10,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{LIGHT BLUE} KITCHEN {BLUE} {LIGHT RED} CLOSET{BROWN} {ORANGE} LIBRARY {GREY 2} {GREY 1} GARAGE {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 11,1 : PRINT "{RVS ON}{GREEN} {RVS OFF} {RVS ON}{LIGHT BLUE}         {RVS OFF} {RVS ON}{LIGHT RED}       {RVS OFF} {RVS ON}{ORANGE}         {RVS OFF} {RVS ON}{GREY 1}        {RVS OFF} {RVS ON}{GREEN} " ;
+	LOCATE 12,1 : PRINT "{RVS ON}{GREEN} {RVS OFF}                                      {RVS ON} " ;
+	LOCATE 13,1 : PRINT "{RVS ON}{GREEN} {YELLOW}  {CYAN}" + GL.SHRUB$ + "{YELLOW}         {CYAN}" + GL.SHRUB$ + "{YELLOW}   {CYAN}" + GL.SHRUB$ + "{YELLOW}   {CYAN}" + GL.SHRUB$ + GL.SHRUB$ + "{YELLOW}   {CYAN}" + GL.SHRUB$ ;
+	PRINT GL.SHRUB$ + "{YELLOW}           {GREEN} " ;
+	LOCATE 14,1 : PRINT "{RVS ON}{GREEN} {YELLOW}                                      {GREEN} " ;
+	POKE 903,30
+	PRINT "{RVS OFF}";
 	COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
-	LOCATE 2,2 : PRINT "\Xcf---------------------------------!"
-	LOCATE 3,2 : PRINT "!           !          !  GARAGE  !"
-	LOCATE 4,2 : PRINT "!           !  CLOSET  !          !"
-	LOCATE 5,2 : PRINT "!  OFFICE   !-----   --!  ---     !"
-	LOCATE 6,2 : PRINT "!                           !-----!"
-	LOCATE 7,2 : PRINT "!-------------!           --!     !"
-	LOCATE 8,2 : PRINT "!                           !     !---"
-	LOCATE 9,2 : PRINT "!  LIBRARY  !--  ---------           !"
-	LOCATE 10,2: PRINT "!--         !            !  KITCHEN  !" 
-	LOCATE 11,4:   PRINT "!         !  BASEMENT  !           !"
-	LOCATE 12,4:   PRINT "!         !            !           !"
-	LOCATE 13,4:   PRINT "!----------------------------------!"
-	## SLEEP 5500
 	RETURN
 
 
-	
+
 
 
 CLEAR.PROMPT.SCREEN:
@@ -83,15 +96,15 @@ CLEAR.MUGSHOT:
 	FOR NDX = 20 TO 25
 		LOCATE NDX,34 : PRINT RPT$(ASC(" "),6);
 	NEXT
-	PRINT "{RVS OFF}"; : COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$) 
+	PRINT "{RVS OFF}"; : COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
 	RETURN
 
 
 SHOW.MUGSHOT:
 	GOSUB CLEAR.MUGSHOT : GOSUB SHOW.SPRITE
 	RETURN
-	
-	
+
+
 SETUP.PROMPT.SCREEN:
 	GOSUB CLEAR.PROMPT.SCREEN
 	IF ShowTheMugshotFlag > 0 THEN GOSUB SHOW.MUGSHOT
@@ -99,12 +112,12 @@ SETUP.PROMPT.SCREEN:
 	## --- SET DEFAULT TEXT SCREEN COLOR
 	PRINT RIGHT$(CLR.FGTEXT.NORMAL$,LEN(CLR.FGTEXT.NORMAL$)-2) ;
 	RETURN
-	
-	
+
+
 LOAD.ALL.SPRITES:
 	BVLOAD "/SPRITES/SUSPECTS2.SPR",8,1,$3000
-	#DEFINE SPRITE.TTL 7	
-	
+	#DEFINE SPRITE.TTL 7
+
 	## 'If sprites are 32x32x4bpp (bits per pixel) then each pixel is 4 bits.
 	## 'A byte is 8 bits, so each byte in memory holds 2 pixels. To get the size
 	## 'you do 32*32/2=512
@@ -116,13 +129,13 @@ LOAD.ALL.SPRITES:
 		MOVSPR NDX,272,160
 	NEXT
 	RETURN
-	
+
 SHOW.SPRITE:
 	GOSUB TURN.OFF.ALL.SPRITES
 	## 'LOCATE 2,2 : PRINT CURRENT.SPRITE.NUM ;
 	SPRITE CURRENT.SPRITE.NUM,3
 	RETURN
-  
+
 TURN.OFF.ALL.SPRITES:
 	FOR NDX = 1 TO SPRITE.TTL : SPRITE NDX,0 : NEXT
 	RETURN
