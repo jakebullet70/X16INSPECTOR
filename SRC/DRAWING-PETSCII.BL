@@ -116,12 +116,17 @@ CLEAR.PROMPT.SCREEN:
 
 
 CLEAR.MUGSHOT:
+	## --- mugshot backdrop: 7x7 grey box (cols 33-39, rows 20-26). The sprite is a
+	## --- 64px canvas holding ~48px of art, so the box frames the face with an ~4px
+	## --- grey border. Starting at col 33 clears the alibi text (max col 32).
+	POKE 903,60
 	COLOR VAL(CLR.BG.MUGSHOT$), VAL(CLR.BG.MUGSHOT$)
 	PRINT "{RVS ON}";
-	FOR NDX = 20 TO 25
-		LOCATE NDX,34 : PRINT RPT$(ASC(" "),6);
+	FOR NDX = 20 TO 26
+		LOCATE NDX,33 : PRINT RPT$(ASC(" "),7);
 	NEXT
 	PRINT "{RVS OFF}"; : COLOR VAL(CLR.FGTEXT.NORMAL$),VAL(CLR.BACKGROUND$)
+	POKE 903,30
 	RETURN
 
 
@@ -143,15 +148,27 @@ LOAD.ALL.SPRITES:
 	BVLOAD "/SPRITES/SUSPECTS2.SPR",8,1,$3000
 	#DEFINE SPRITE.TTL 7
 
-	## 'If sprites are 32x32x4bpp (bits per pixel) then each pixel is 4 bits.
-	## 'A byte is 8 bits, so each byte in memory holds 2 pixels. To get the size
-	## 'you do 32*32/2=512
-	OFFSET = 512
+	## --- sprites are 64x64x4bpp: 64*64/2 = 2048 bytes each ---
+	OFFSET = 2048
+
+	## --- Give the light-bulb (the last sprite) a private palette via palette
+	## --- offset 1 (VERA entries 16-31) so its glass is a bright yellow without
+	## --- touching the shared 0-15 colours used by text and the other sprites.
+	## --- Palette entry N lives at VRAM $1:FA00+N*2 ; byte0=(G<<4)|B, byte1=R.
+	## --- The bulb uses idx 1,7,11,12,15 -> entries 17,23,27,28,31.
+	VPOKE 1,$FA22,$FF : VPOKE 1,$FA23,$0F : REM --- 17 white
+	VPOKE 1,$FA2E,$F0 : VPOKE 1,$FA2F,$0F : REM --- 23 bright yellow $FF0
+	VPOKE 1,$FA36,$33 : VPOKE 1,$FA37,$03 : REM --- 27 dark grey
+	VPOKE 1,$FA38,$77 : VPOKE 1,$FA39,$07 : REM --- 28 mid grey
+	VPOKE 1,$FA3E,$BB : VPOKE 1,$FA3F,$0B : REM --- 31 light grey
 
 	FOR NDX = 1 TO SPRITE.TTL
 		SPRMEM NDX,1,($3000 + (OFFSET * (NDX - 1))),0
-		SPRITE NDX,0,0,0,2,2
-		MOVSPR NDX,272,160
+		SP.PAL.OFF = 0 : IF NDX = SPRITE.TTL THEN SP.PAL.OFF = 1
+		SPRITE NDX,0,SP.PAL.OFF,0,3,3
+		## --- park all sprites centred in the mugshot box (see CLEAR.MUGSHOT).
+		## --- box centre px = (284,180); 64px sprite top-left = centre-32 = (252,148).
+		MOVSPR NDX,252,148
 	NEXT
 	RETURN
 
