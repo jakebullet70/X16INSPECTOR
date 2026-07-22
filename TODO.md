@@ -136,7 +136,10 @@ lands in `RUN/`), run the game. The repo-root `SRC/` and `SPRITES/` are the
 
 ## P4 — Finish the game (from in-code TODOs)
 
-- [ ] `INS-ABOUT.BL` — "needs work / something flashy" (currently a plain text card).
+- [ ] `INS-ABOUT.BL` — make the About screen show a **full-screen graphic**
+  (title/splash art — bitmap or PETSCII), replacing the text card. The credits
+  text was refactored into a clean color-accented timeline for now, but the goal
+  is a proper image.
 - [ ] Success/failure endings — add sound cues if sound is on
   (`INSPECTOR.BL:383,400`).
 - [ ] Optional "blink" sound when changing the time (`INSPECTOR.BL:150`).
