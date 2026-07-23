@@ -46,6 +46,7 @@ INTRO.MENU:
  SLEEP(20) : GOSUB KB.BUFFER.CLEAR
  ## --- bottom nav hint in the theme accent (blue on light), not the red alert colour
  POKE 903,60 : LOCATE 30,1 : COLOR VAL(CLR.FGTEXT.BRIGHT$),VAL(CLR.BACKGROUND$)
+ IF OPTIONS.THEME <> 2 THEN COLOR 4 : REM --- dark theme: purple footer
  PRINT "RETURN SELECTS    ARROW KEYS TO NAVIGATE";
  POKE 903,30
   
